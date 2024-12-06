@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\main.cpp" />
+    <ClCompile Include="OGL3D\source\OGL3D\Game\OGame.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Window\OWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OGL3D\include\OGL3D\Game\OGame.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Window\OWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
