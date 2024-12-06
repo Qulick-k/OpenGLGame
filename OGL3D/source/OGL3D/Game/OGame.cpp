@@ -4,18 +4,17 @@
 
 OGame::OGame()
 {
-	m_display = new OWindow();
+	m_display = std::unique_ptr<OWindow>(new OWindow());
 }
 
 OGame::~OGame()
 {
-	delete m_display;
 }
 
 void OGame::run()
 {
 	MSG msg;
-	while (m_isRunning)
+	while (m_isRunning && !m_display->isClosed())
 	{
 		//檢查應用程式的訊息佇列中是否有訊息(PeekMessage), (&msg)使用地址將訊息儲存儲到變數中, (hWnd)檢查與目前執行緒關聯的視窗的訊息, 
 		//(wMsgFilterMin),(wMsgFilterMax)設置要檢查訊息類型範圍設為NULL表示檢查所有類型的訊息, (PM_REMOVE)檢索訊息後移除
