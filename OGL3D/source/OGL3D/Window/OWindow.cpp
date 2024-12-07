@@ -1,4 +1,7 @@
 #include <OGL3D/Window/OWindow.h>  //注意斜線方向，不然開不了檔案
+#include <OGL3D/Game/OGame.h>
+#include <glad/glad_wgl.h>
+#include <glad/glad.h>
 #include <Windows.h>               //使用Win32 API
 #include <assert.h> 			   //使用assert函數,只用於開發測試,當 assert 中的條件為假時,程式會顯示錯誤訊息並中止執行
 
@@ -23,13 +26,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)   //
 	}
 	return NULL;
 }
-
-
-
-
-
-
-
 
 
 OWindow::OWindow()
@@ -59,11 +55,74 @@ OWindow::OWindow()
 
 	ShowWindow((HWND)m_handle, SW_SHOW);             //顯示視窗
 	UpdateWindow((HWND)m_handle);                    //更新視窗
+
+
+
+	//Creating OpenGL Render Context
+
+	auto hDC = GetDC(HWND(m_handle));                          //取得視窗的設備上下文（Device Context, DC）,強制轉型HWND(m_handle),將m_handle,假設是視窗控制代碼）傳遞給GetDC。
+
+	int pixelFormatAttributes[] = {
+		WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,                       //支援將渲染輸出到視窗
+		WGL_SUPPORT_OPENGL_ARB, GL_TRUE,					   //支援OpenGL渲染
+		WGL_DOUBLE_BUFFER_ARB, GL_TRUE,						   //支援雙緩衝區
+		WGL_ACCELERATION_ARB, WGL_FULL_ACCELERATION_ARB,	   //支援硬體加速
+		WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,				   //像素類型設置為RGBA
+		WGL_COLOR_BITS_ARB, 32,								   //顏色緩衝區的位元深度為32位數
+		WGL_DEPTH_BITS_ARB, 24,								   //深度緩衝區的位元深度為24位數
+		WGL_STENCIL_BITS_ARB, 8,							   //模板緩衝區的位元深度為8位數
+		0													   //結束標記,表示屬性陣列的結束
+	};
+
+	int pixelFormat = 0; 									   //儲存選定的像素格式索引（整數值）
+	UINT numFormats = 0;									   //儲存匹配條件的像素格式數量
+
+	/*
+	(wglChoosePixelFormatARB) 是OpenGL的擴展函數，用於從像素格式屬性列表中選擇符合條件的像素格式。
+	(hDC) 設備上下文（Device Context）的控制代碼，用於指定與像素格式關聯的視窗
+	(pixelFormatAttributes) 屬性陣列，用於指定選擇條件
+	(nullptr) 一般設為nullptr,表示無須指定額外的浮點屬性
+	(1) 請求找到一個像素格式
+	(&pixelFormat) 儲存選定的像素格式索引（整數值）
+	(&numFormats) 儲存匹配條件的像素格式數量
+	選擇符合指定屬性的像素格式，並為 OpenGL 渲染做好準備。如果選擇成功，pixelFormat 中將包含所選的像素格式索引，供後續設置使用。
+	*/
+	wglChoosePixelFormatARB(hDC, pixelFormatAttributes, nullptr, 1, &pixelFormat, &numFormats);   
+	assert(numFormats);
+
+	PIXELFORMATDESCRIPTOR pixelFormatDesc = {};               //一個結構,用來描述設備上下文（device context）所支援的像素格式,pixelFormatDesc用來接收像素格式的相關資訊。
+	DescribePixelFormat(                                      // 透過DescribePixelFormat函數，填充PIXELFORMATDESCRIPTOR結構，以檢索特定像素格式的詳細屬性
+		hDC,                                                  //設備上下文的控制代碼                                      
+		pixelFormat, 										  //像素格式的索引
+		sizeof(PIXELFORMATDESCRIPTOR), 					      //結構的大小(以位元組為單位)
+		&pixelFormatDesc									  //接收像素格式資訊的指標
+	);
+	SetPixelFormat(											  // 使用SetPixelFormat函數，為設備上下文（device context，hDC）設置特定的像素格式。
+		hDC, 												  //設備上下文的控制代碼
+		pixelFormat, 										  //像素格式的索引
+		&pixelFormatDesc									  //像素格式描述指標
+	);
+
+
+	int openGLAttributes[] = {
+		WGL_CONTEXT_MAJOR_VERSION_ARB, 4,                                     // OpenGL 的主版本號為 4, 意味著渲染上下文將支持 OpenGL 4.x 的功能
+		WGL_CONTEXT_MINOR_VERSION_ARB, 6,                                     // OpenGL 的次版本號為 6, 意味著渲染上下文將支持 OpenGL 4.6 的功能
+		WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,       // 定義 OpenGL 的配置文件（Profile）, 指定使用 Core Profile (核心配置),不包含被 OpenGL 標記為過時的功能
+		0
+	};
+
+	m_context = wglCreateContextAttribsARB(									  // 創建 OpenGL 渲染上下文 (Rendering Context)，並指定其屬性。
+		hDC, 																  // 指向視窗的繪圖環境,是創建 OpenGL 渲染上下文的基礎
+		0,																      // 設為 0,表示該渲染上下文不共享其他上下文的狀態
+		openGLAttributes													  // 包含渲染上下文的屬性列表（例如版本號、配置文件）,前面的程式碼中,定義了 openGLAttributes,用於設置 OpenGL 4.6 的上下文以及核心配置。
+	);
+	assert(m_context);
 }
 
 OWindow::~OWindow()
 {
-		DestroyWindow((HWND)m_handle);               //銷毀視窗
+	wglDeleteContext(HGLRC(m_context));          //HGLRC(Handle to GL Rendering Context),m_context指標轉換為HGLRC格式,傳遞給函數進行刪除. 刪除 OpenGL 渲染上下文 (Rendering Context),以釋放資源並清理繪圖環境
+	DestroyWindow((HWND)m_handle);               //銷毀視窗
 }
 
 /*void OWindow::onDestroy()

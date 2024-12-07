@@ -1,3 +1,6 @@
 G:\OpenGL_SideProject\OpenGLGame\Game\main.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\main.obj
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Game\OGame.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OGame.obj
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Window\OWindow.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OWindow.obj
+G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Graphics\OGraphicsEngine.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OGraphicsEngine.obj
+G:\OpenGL_SideProject\OpenGLGame\OGL3D\vendor\glad\src\glad.c;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\glad.obj
+G:\OpenGL_SideProject\OpenGLGame\OGL3D\vendor\glad\src\glad_wgl.c;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\glad_wgl.obj
