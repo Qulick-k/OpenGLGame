@@ -18,7 +18,7 @@
     <ClCompile Include="Game\main.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="OGL3D\source\OGL3D\Window\OWindow.cpp">
+    <ClCompile Include="OGL3D\source\OGL3D\Window\CWin32Window.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="OGL3D\source\OGL3D\Game\OGame.cpp">
@@ -33,6 +33,12 @@
     <ClCompile Include="OGL3D\vendor\glad\src\glad_wgl.c">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="OGL3D\source\OGL3D\Game\Win32\CWin32Game.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="OGL3D\source\OGL3D\Graphics\Win32\CWin32GraphicsEngine.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGL3D\include\OGL3D\Window\OWindow.h">
@@ -42,6 +48,12 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="OGL3D\include\OGL3D\Graphics\OGraphicsEngine.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\Math\OVec4.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\OPrerequisites.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
