@@ -39,6 +39,9 @@
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\Win32\CWin32GraphicsEngine.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="OGL3D\source\OGL3D\Graphics\OVertexArrayObject.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGL3D\include\OGL3D\Window\OWindow.h">
@@ -54,6 +57,12 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="OGL3D\include\OGL3D\OPrerequisites.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\Math\ORect.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\Graphics\OVertexArrayObject.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

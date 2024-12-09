@@ -6,3 +6,4 @@ G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Window\CWin32Window.cpp;G:\O
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Graphics\OGraphicsEngine.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OGraphicsEngine.obj
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\vendor\glad\src\glad.c;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\glad.obj
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\vendor\glad\src\glad_wgl.c;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\glad_wgl.obj
+G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Graphics\OVertexArrayObject.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OVertexArrayObject.obj

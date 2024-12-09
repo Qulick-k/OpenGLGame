@@ -125,6 +125,13 @@ OWindow::~OWindow()
 	DestroyWindow((HWND)m_handle);               //銷毀視窗
 }
 
+ORect OWindow::getInnerSize()
+{
+	RECT rc = {};                                          //RECT 結構用於定義矩形區域的左上角和右下角座標
+	GetClientRect((HWND)m_handle, &rc);                    //取得Viewport的客戶區域大小, GetClientRect 函數用於取得Viewport客戶區域的大小,即不包括標題欄和邊框的區域
+	return ORect(rc.right - rc.left, rc.bottom - rc.top);  //返回Viewport的內部大小,即客戶區域的寬和高
+}
+
 void OWindow::makeCurrentContext()
 {
 	wglMakeCurrent(GetDC(HWND(m_handle)), HGLRC(m_context));               //將指定的渲染上下文（Rendering Context, RC）綁定到設備上下文（Device Context, DC）,使 OpenGL 繪圖命令影響該設備上下文所描述的窗口
