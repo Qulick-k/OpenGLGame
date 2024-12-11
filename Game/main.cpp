@@ -10,7 +10,7 @@ int main()
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;            //使用e.what()輸出異常的具體錯誤訊息,方便開發者定位問題。
+		std::wclog << e.what() << std::endl;            //使用e.what()輸出異常的具體錯誤訊息,方便開發者定位問題。
 		return 1;
 	}
 

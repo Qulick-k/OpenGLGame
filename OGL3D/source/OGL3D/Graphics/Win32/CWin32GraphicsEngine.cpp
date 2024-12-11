@@ -48,10 +48,10 @@ OGraphicsEngine::OGraphicsEngine()
 	wglMakeCurrent(dummyDC, dummyContext);                                               //啟用OpenGL渲染上下文,將其設置為當前活動上下文
 
 	if (!gladLoadWGL(dummyDC)) 													         //加載WGL,(gladLoadWGL)WGL是Windows平台上與OpenGL相關的擴展,它負責窗口管理和上下文創建
-		throw std::runtime_error("OGraphicsEngine - Error - gladLoadWGL failed");
+		OGL3D_ERROR("OGraphicsEngine - Error - gladLoadWGL failed");
 
 	if (!gladLoadGL()) 													                 //加載OpenGL函數,確保可以使用OpenGL的API進行渲染
-		throw std::runtime_error("OGraphicsEngine - Error - gladLoadGL failed");
+		OGL3D_ERROR("OGraphicsEngine - Error - gladLoadGL failed");
 
 
 	wglMakeCurrent(dummyDC, 0);                                                          //解除上下文綁定：確保當前上下文無效

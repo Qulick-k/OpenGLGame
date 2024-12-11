@@ -30,19 +30,42 @@ void OGame::onCreate()
 {
 	const f32 triangleVerices[] = { //三角形的三個頂點坐標
 		-0.5f, -0.5f, 0.0f,
+		1    ,0     ,0    ,
+
 		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
+		0    ,1     ,0    ,
+
+		0.0f, 0.5f, 0.0f,
+		0    ,0     ,1
 	};
 
-	m_triangleVAO = m_graphicsEngine->createVertexArrayObject({(void*)triangleVerices, sizeof(f32)*3, 3});   // 呼叫函數 createVertexArrayObject，用來建立一個 Vertex Array Object (VAO)
+
+	OVertexAttribute attribsList[] = {
+		3,  //position
+		3   //color
+	};
+
+	m_triangleVAO = m_graphicsEngine->createVertexArrayObject({
+		(void*)triangleVerices,
+		sizeof(f32)*(3+3), 
+		3,
+		attribsList,
+		2
+
+		});   // 呼叫函數 createVertexArrayObject，用來建立一個 Vertex Array Object (VAO)
+	m_shader = m_graphicsEngine->createShaderProgram(
+		{
+			L"Assets/Shaders/BasicShader.vert",
+			L"Assets/Shaders/BasicShader.frag"
+		}); // 呼叫函數 createShaderProgram，用來建立一個 Shader Program
 }
 
 void OGame::onUpdate()
 {
-	m_graphicsEngine->clear(OVec4(1, 0, 0, 1));              //調用OGraphicsEngine類的clear函數，清除畫面OVec4(1, 0, 0, 1) 應該代表 RGBA 格式的紅色（紅色值為 1，綠色和藍色為 0，透明度為 1 即完全不透明）
+	m_graphicsEngine->clear(OVec4(0, 0, 0, 1));              //調用OGraphicsEngine類的clear函數，清除畫面OVec4(1, 0, 0, 1) 應該代表 RGBA 格式的紅色（紅色值為 1，綠色和藍色為 0，透明度為 1 即完全不透明）
 
 	m_graphicsEngine->setVertexArrayObject(m_triangleVAO);   //調用OGraphicsEngine類的setVertexArrayObject函數，設置當前的VAO
-
+	m_graphicsEngine->setShaderProgram(m_shader);            //調用OGraphicsEngine類的setShaderProgram函數，設置當前的Shader Program
 	m_graphicsEngine->drawTriangles(m_triangleVAO->getVertexBufferSize(), 0);                   //調用OGraphicsEngine類的drawTriangles函數，繪製三角形
 
 	m_display->present(false);							     //調用OWindow類的present函數，控制垂直同步

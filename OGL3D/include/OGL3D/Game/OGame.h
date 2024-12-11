@@ -24,5 +24,6 @@ protected:
 
 
 	OVertexArrayObjectPtr m_triangleVAO;                //定義名為 m_triangleVAO 指向 OVertexArrayObject 類型的智慧指針
+	OShaderProgramPtr m_shader; 					    //定義名為 m_shader 指向 OShaderProgram 類型的智慧指針
 };
 
