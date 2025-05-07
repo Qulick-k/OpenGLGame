@@ -35,12 +35,8 @@ OVertexArrayObject::OVertexArrayObject(const OVertexBufferDesc& data)
 			data.vertexSize,
 			(void*)((i==0)?0: data.attributesList[i-1].numElements*sizeof(f32))
 		);
-		glEnableVertexAttribArray(0);  //啟用對應索引（0）的頂點屬性數據，使其可用於後續的繪製操作
+		glEnableVertexAttribArray(i);  //啟用對應索引（0）的頂點屬性數據，使其可用於後續的繪製操作
 	}
-	
-
-	
-
 
 	glBindVertexArray(0); //解除綁定頂點陣列物件（VAO, Vertex Array Object）
 

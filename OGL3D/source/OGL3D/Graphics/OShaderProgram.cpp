@@ -4,6 +4,7 @@
 #include <sstream>    //in order to extract the file, include sstream
 #include <string>     //儲存shader code在string中
 #include <vector>     //動態陣列（Dynamic Array）
+#include <filesystem>
 
 OShaderProgram::OShaderProgram(const OShaderProgramDesc& desc)
 {
@@ -31,10 +32,12 @@ ui32 OShaderProgram::getId()
 void OShaderProgram::attach(const wchar_t* shaderFilePath, const OShaderType& type)
 {
 	std::string shaderCode;	                    // 儲存 Shader Code
-	std::ifstream shaderStream(shaderFilePath);	// 讀取 Shader 檔案
+	
+	auto path = std::filesystem::path(shaderFilePath);
+
+	std::ifstream shaderStream(path);	// 讀取 Shader 檔案
 	if (shaderStream.is_open())
-	{
-		
+	{		
 		std::stringstream sstr;
 		sstr << shaderStream.rdbuf();	// sstr 將包含 shaderStream 所有的數據
 		shaderCode = sstr.str();		// 將 sstr 轉換為 string

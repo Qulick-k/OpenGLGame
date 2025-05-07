@@ -1,7 +1,7 @@
 #include <OGL3D/Game/OGame.h>
 #include <OGL3D/Window/OWindow.h>
-//#include <OGL3D/Graphics/OGraphicsEngine.h> 
 #include <OGL3D/Graphics/OVertexArrayObject.h>
+//#include <OGL3D/Graphics/OGraphicsEngine.h> 
 /*  #include 指令
 #include 指令
 作用：
@@ -49,6 +49,7 @@ void OGame::onCreate()
 		(void*)triangleVerices,
 		sizeof(f32)*(3+3), 
 		3,
+
 		attribsList,
 		2
 
