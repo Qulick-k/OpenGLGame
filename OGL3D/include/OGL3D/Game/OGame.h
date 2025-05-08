@@ -1,8 +1,9 @@
 #pragma once
 #include <memory>
 #include <OGL3D/Graphics/OGraphicsEngine.h>
+#include <chrono>
 
-class OGraphicsEngine;
+//class OGraphicsEngine;
 class OWindow;
 class OGame
 {
@@ -23,7 +24,11 @@ protected:
 
 
 
-	OVertexArrayObjectPtr m_triangleVAO;                //定義名為 m_triangleVAO 指向 OVertexArrayObject 類型的智慧指針
+	OVertexArrayObjectPtr m_polygonVAO;                 //定義名為 m_polygonVAO 指向 OVertexArrayObject 類型的智慧指針
+	OUniformBufferPtr m_uniform;                        //定義名為 m_uniform 指向 OUniformBuffer 類型的智慧指針
 	OShaderProgramPtr m_shader; 					    //定義名為 m_shader 指向 OShaderProgram 類型的智慧指針
+
+	std::chrono::system_clock::time_point m_previousTime; //定義名為 m_previousTime 的變數，類型為 std::chrono::system_clock::time_point
+	f32 m_scale = 0;
 };
 

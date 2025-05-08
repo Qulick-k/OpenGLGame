@@ -5,6 +5,7 @@
 #include <stdexcept>												  // 引入標頭檔，提供 std::runtime_error 的功能
 
 class OVertexArrayObject; 										      // 前置宣告 (Forward Declaration)，告訴編譯器 OVertexArrayObject 類別會在後面定義
+class OUniformBuffer; 										          // 前置宣告 (Forward Declaration)，告訴編譯器 OUniformBuffer 類別會在後面定義
 class OShaderProgram;                                                 // 前置宣告 (Forward Declaration)，告訴編譯器 OVertexArrayObject 類別會在後面定義，定義一個shared pointer for the shader
 /*
 定義一個型別別名 OVertexArrayObjectPtr：
@@ -13,6 +14,7 @@ std::shared_ptr 是 C++11 引入的一種智慧指標，用於自動管理物件的記憶體生命週期。
 當最後一個 std::shared_ptr 指向的物件被銷毀時，物件會自動釋放。
 */
 typedef std::shared_ptr<OVertexArrayObject> OVertexArrayObjectPtr;
+typedef std::shared_ptr<OUniformBuffer> OUniformBufferPtr;            //定義一個shared pointer for the uniform buffer
 typedef std::shared_ptr<OShaderProgram> OShaderProgramPtr;            //定義一個shared pointer for the shader
 
 typedef float f32;          // 別名 f32 讓其他開發者明確知道這是 32 位的浮點數
@@ -39,6 +41,17 @@ struct OShaderProgramDesc
 {
 	const wchar_t* vertexShaderFilePath;		 //頂點著色器
 	const wchar_t* fragmentShaderFilePath;       //片段著色器
+};
+
+struct OUniformBufferDesc
+{
+	ui32 size = 0;
+};
+
+enum OTriangleType
+{
+	TriangleList = 0,	//三角形列表
+	TriangleStrip 		//三角形帶
 };
 
 enum OShaderType

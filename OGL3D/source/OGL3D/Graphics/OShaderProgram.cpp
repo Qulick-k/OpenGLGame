@@ -29,6 +29,12 @@ ui32 OShaderProgram::getId()
 	return m_programId;
 }
 
+void OShaderProgram::setUniformBufferSlot(const char* name, ui32 slot)
+{
+	ui32 index = glGetUniformBlockIndex(m_programId, name);	// 獲取 uniform block 的索引
+	glUniformBlockBinding(m_programId, index, slot);	// 設置 uniform block 的綁定點
+}
+
 void OShaderProgram::attach(const wchar_t* shaderFilePath, const OShaderType& type)
 {
 	std::string shaderCode;	                    // 儲存 Shader Code

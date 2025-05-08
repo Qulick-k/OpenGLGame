@@ -1,6 +1,8 @@
 #include <OGL3D/Game/OGame.h>
 #include <OGL3D/Window/OWindow.h>
 #include <OGL3D/Graphics/OVertexArrayObject.h>
+#include <OGL3D/Graphics/OShaderProgram.h>
+#include <OGL3D/Graphics/OUniformBuffer.h>
 //#include <OGL3D/Graphics/OGraphicsEngine.h> 
 /*  #include 指令
 #include 指令
@@ -11,6 +13,11 @@
 #include "標頭檔案"：表示從當前檔案所在目錄或指定的路徑中搜尋檔案。
 */
 //#include <Windows.h>
+
+struct UniformData
+{
+	f32 scale;
+};
 
 OGame::OGame()
 {
@@ -28,15 +35,18 @@ OGame::~OGame()
 
 void OGame::onCreate()
 {
-	const f32 triangleVerices[] = { //三角形的三個頂點坐標
+	const f32 polygonVertices[] = { //四角角形的4個頂點坐標
 		-0.5f, -0.5f, 0.0f,
 		1    ,0     ,0    ,
 
-		0.5f, -0.5f, 0.0f,
+		-0.5f, 0.5f, 0.0f,
 		0    ,1     ,0    ,
 
-		0.0f, 0.5f, 0.0f,
-		0    ,0     ,1
+		0.5f, -0.5f, 0.0f,
+		0    ,0     ,1	,
+
+		0.5f, 0.5f, 0.0f,
+		1    ,1     ,0
 	};
 
 
@@ -45,29 +55,62 @@ void OGame::onCreate()
 		3   //color
 	};
 
-	m_triangleVAO = m_graphicsEngine->createVertexArrayObject({
-		(void*)triangleVerices,
+	m_polygonVAO = m_graphicsEngine->createVertexArrayObject({
+		(void*)polygonVertices,
 		sizeof(f32)*(3+3), 
-		3,
+		4,
 
 		attribsList,
 		2
-
 		});   // 呼叫函數 createVertexArrayObject，用來建立一個 Vertex Array Object (VAO)
+
+
+	m_uniform = m_graphicsEngine->createUniformBuffer({
+		sizeof(UniformData)
+		}); // 呼叫函數 createUniformBuffer，用來建立一個 Uniform Buffer Object (UBO)
+
 	m_shader = m_graphicsEngine->createShaderProgram(
 		{
 			L"Assets/Shaders/BasicShader.vert",
 			L"Assets/Shaders/BasicShader.frag"
 		}); // 呼叫函數 createShaderProgram，用來建立一個 Shader Program
+
+	m_shader->setUniformBufferSlot("UniformData", 0); // 設置 Uniform Buffer 的槽位，將 Uniform Buffer 綁定到 Shader Program 中的指定槽位
 }
 
 void OGame::onUpdate()
 {
+	//computing delta time
+	auto currentTime = std::chrono::system_clock::now(); //獲取當前時間
+	auto elapsedSeconds = std::chrono::duration<double>();
+	if (m_previousTime.time_since_epoch().count())
+	{
+		elapsedSeconds = currentTime - m_previousTime; //計算當前時間與上次時間的差值
+	}
+	m_previousTime = currentTime; //更新上次時間為當前時間
+
+
+	auto deltaTime = (f32)elapsedSeconds.count(); //將時間差轉換為浮點數類型的秒數
+
+
+
+	m_scale += 6.23f * deltaTime; //將時間差乘以3.14f，並累加到m_scale變數中, 這樣可以使得m_scale隨著時間的推移而增加，從而實現動畫效果
+	auto curreentScale = abs(sin(m_scale)); //計算當前的縮放比例，使用sin函數來獲取一個在-1到1之間的值，然後取絕對值，使其在0到1之間變化
+
+
+
+	UniformData data = { curreentScale };
+	m_uniform->setData(&data); //調用OUniformBuffer類的setData函數，設置Uniform Buffer的數據  
+
+
+
+
 	m_graphicsEngine->clear(OVec4(0, 0, 0, 1));              //調用OGraphicsEngine類的clear函數，清除畫面OVec4(1, 0, 0, 1) 應該代表 RGBA 格式的紅色（紅色值為 1，綠色和藍色為 0，透明度為 1 即完全不透明）
 
-	m_graphicsEngine->setVertexArrayObject(m_triangleVAO);   //調用OGraphicsEngine類的setVertexArrayObject函數，設置當前的VAO
+	m_graphicsEngine->setVertexArrayObject(m_polygonVAO);   //調用OGraphicsEngine類的setVertexArrayObject函數，設置當前的VAO
+	m_graphicsEngine->setUniformBuffer(m_uniform, 0);       //調用OGraphicsEngine類的setUniformBuffer函數，設置當前的UBO
 	m_graphicsEngine->setShaderProgram(m_shader);            //調用OGraphicsEngine類的setShaderProgram函數，設置當前的Shader Program
-	m_graphicsEngine->drawTriangles(m_triangleVAO->getVertexBufferSize(), 0);                   //調用OGraphicsEngine類的drawTriangles函數，繪製三角形
+	m_graphicsEngine->drawTriangles(TriangleStrip, m_polygonVAO->getVertexBufferSize(), 0);                   //調用OGraphicsEngine類的drawTriangles函數，繪製三角形
 
 	m_display->present(false);							     //調用OWindow類的present函數，控制垂直同步
 }
