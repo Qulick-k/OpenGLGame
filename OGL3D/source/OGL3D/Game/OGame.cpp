@@ -3,6 +3,7 @@
 #include <OGL3D/Graphics/OVertexArrayObject.h>
 #include <OGL3D/Graphics/OShaderProgram.h>
 #include <OGL3D/Graphics/OUniformBuffer.h>
+#include <OGL3D/Math/OMat4.h>
 //#include <OGL3D/Graphics/OGraphicsEngine.h> 
 /*  #include 指令
 #include 指令
@@ -16,7 +17,7 @@
 
 struct UniformData
 {
-	f32 scale;
+	OMat4 world;
 };
 
 OGame::OGame()
@@ -94,12 +95,33 @@ void OGame::onUpdate()
 
 
 
-	m_scale += 6.23f * deltaTime; //將時間差乘以3.14f，並累加到m_scale變數中, 這樣可以使得m_scale隨著時間的推移而增加，從而實現動畫效果
+	m_scale += 1.14f * deltaTime; //將時間差乘以3.14f，並累加到m_scale變數中, 這樣可以使得m_scale隨著時間的推移而增加，從而實現動畫效果
 	auto curreentScale = abs(sin(m_scale)); //計算當前的縮放比例，使用sin函數來獲取一個在-1到1之間的值，然後取絕對值，使其在0到1之間變化
 
 
+	OMat4 world, temp; //創建一個OMat4類的對象world
 
-	UniformData data = { curreentScale };
+	temp.setIdentity(); //調回預設矩陣
+	temp.setScale(OVec4(1, 1, 1, 1)); //設置縮放矩陣，將當前的縮放比例應用到world矩陣上, 這樣可以實現物體的縮放效果
+	world *= temp; 
+
+	temp.setIdentity();
+	temp.setRotationZ(m_scale); //設置Z軸旋轉矩陣，將當前的旋轉角度應用到world矩陣上
+	world *= temp;
+
+	temp.setIdentity();
+	temp.setRotationY(m_scale); //設置Y軸旋轉矩陣，將當前的旋轉角度應用到world矩陣上
+	world *= temp;
+
+	temp.setIdentity();
+	temp.setRotationX(m_scale); //設置X軸旋轉矩陣，將當前的旋轉角度應用到world矩陣上
+	world *= temp;
+
+	temp.setIdentity(); 
+	temp.setTranslation(OVec4(0, 0, 0, 1)); //設置平移矩陣，將當前的平移比例應用到world矩陣上, 這樣可以實現物體的平移效果
+	world *= temp; 
+
+	UniformData data = { world };
 	m_uniform->setData(&data); //調用OUniformBuffer類的setData函數，設置Uniform Buffer的數據  
 
 
