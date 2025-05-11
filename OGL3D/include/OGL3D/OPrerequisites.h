@@ -37,6 +37,12 @@ struct  OVertexBufferDesc
 	ui32 attributesListSize = 0;                      //頂點屬性的數量
 };
 
+struct  OIndexBufferDesc
+{
+	void* indicesList = nullptr;		  //指向頂點資料的指標,void* 泛型指標可以指向任意類型的資料, nullptr 初始時沒有指向任何資料
+	ui32 listSize = 0; 				      //頂點列表中的元素數量
+};
+
 struct OShaderProgramDesc
 {
 	const wchar_t* vertexShaderFilePath;		 //頂點著色器
@@ -48,13 +54,26 @@ struct OUniformBufferDesc
 	ui32 size = 0;
 };
 
-enum OTriangleType
+enum class OTriangleType
 {
 	TriangleList = 0,	//三角形列表
 	TriangleStrip 		//三角形帶
 };
 
-enum OShaderType
+enum class OCullType
+{
+	BackFace = 0,    //背面剔除
+	FrontFace,     //正面剔除
+	Both      //雙面剔除
+};
+
+enum class OWindingOrder
+{
+	ClockWise = 0, //順時針
+	CounterClockWise //逆時針
+};
+
+enum class OShaderType
 {
 	VertexShader =0,
 	FragmentShader

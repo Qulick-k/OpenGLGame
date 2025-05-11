@@ -1,2 +1,11 @@
-﻿  OGame.cpp
+﻿  main.cpp
+  OGame.cpp
+  CWin32Game.cpp
+  OGraphicsEngine.cpp
+  OShaderProgram.cpp
+  OUniformBuffer.cpp
+  OVertexArrayObject.cpp
+  CWin32GraphicsEngine.cpp
+  CWin32Window.cpp
+  Generating Code...
   OpenGLGame.vcxproj -> G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OpenGLGame.exe

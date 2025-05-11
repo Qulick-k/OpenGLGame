@@ -9,8 +9,8 @@
 OShaderProgram::OShaderProgram(const OShaderProgramDesc& desc)
 {
 	m_programId = glCreateProgram();	// 創建 Shader Program
-	attach(desc.vertexShaderFilePath, VertexShader);          //call attach編譯vertex shader
-	attach(desc.fragmentShaderFilePath, FragmentShader);      //call attach編譯fragment shader
+	attach(desc.vertexShaderFilePath, OShaderType::VertexShader);          //call attach編譯vertex shader
+	attach(desc.fragmentShaderFilePath, OShaderType::FragmentShader);      //call attach編譯fragment shader
 	link();	// 連接 Shader Program
 }
 
@@ -58,9 +58,9 @@ void OShaderProgram::attach(const wchar_t* shaderFilePath, const OShaderType& ty
 	ui32 shaderId = 0;                  //儲存Shader ID
 
 	//根據 type 的值，決定創建哪種類型的著色器
-	if (type == VertexShader)
+	if (type == OShaderType::VertexShader)
 		shaderId = glCreateShader(GL_VERTEX_SHADER);
-	else if (type == FragmentShader)
+	else if (type == OShaderType::FragmentShader)
 		shaderId = glCreateShader(GL_FRAGMENT_SHADER);
 
 	auto sourcePointer = shaderCode.c_str();	                //將 shader code 轉換為 const char* 類型
@@ -81,7 +81,7 @@ void OShaderProgram::attach(const wchar_t* shaderFilePath, const OShaderType& ty
 
 
 	glAttachShader(m_programId, shaderId);	                    //將 shader 物件附加到 Shader Program 中 .AKA 將一個著色器 (Shader) 附加到指定的程式對象 (Program Object)
-	m_attachedShaders[type] = shaderId;	                        //將 shader ID 儲存到 m_attachedShader 中
+	m_attachedShaders[(ui32)type] = shaderId;	                        //將 shader ID 儲存到 m_attachedShader 中
 
 	OGL3D_INFO("OShaderProgram | " << shaderFilePath << "compiled successfully");	//輸出編譯成功的訊息
 }
