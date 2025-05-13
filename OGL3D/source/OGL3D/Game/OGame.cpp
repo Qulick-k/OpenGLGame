@@ -3,9 +3,11 @@
 #include <OGL3D/Graphics/OVertexArrayObject.h>
 #include <OGL3D/Graphics/OShaderProgram.h>
 #include <OGL3D/Graphics/OUniformBuffer.h>
+#include <OGL3D/Graphics/OGraphicsEngine.h>
 #include <OGL3D/Math/OMat4.h>
 #include <OGL3D/Math/OVec3.h>
 #include <OGL3D/Math/OVec2.h>
+#include <OGL3D/Entity/OEntitySystem.h>
 //#include <OGL3D/Graphics/OGraphicsEngine.h> 
 /*  #include 指令
 #include 指令
@@ -33,6 +35,7 @@ OGame::OGame()
 {
 	m_graphicsEngine = std::make_unique<OGraphicsEngine>(); //初始化OGraphicsEngine,  || std::make_unique創建一個GraphicsEngine類型的智慧指標（std::unique_ptr）,並將其指派給變數m_graphicsEngine
 	m_display = std::make_unique<OWindow>();                //使用智慧指針std::unique_ptr管理一個動態分配的OWindow對象，將其分配給成員變數m_display //使用make_unique<OWindow>()取代unique_ptr<OWindow>(new OWindow())
+	m_entitySystem = std::make_unique<OEntitySystem>();     //使用智慧指針std::unique_ptr管理一個動態分配的OEntitySystem對象，將其分配給成員變數m_entitySystem //使用make_unique<OEntitySystem>()取代unique_ptr<OEntitySystem>(new OEntitySystem())
 
 	m_display->makeCurrentContext();                        //調用OWindow類的makeCurrentContext()函數
 	
@@ -186,19 +189,28 @@ void OGame::onCreate()
 	m_shader->setUniformBufferSlot("UniformData", 0); // 設置 Uniform Buffer 的槽位，將 Uniform Buffer 綁定到 Shader Program 中的指定槽位
 }
 
-void OGame::onUpdate()
+void OGame::onUpdateInternal()
 {
 	//computing delta time
-	auto currentTime = std::chrono::system_clock::now(); //獲取當前時間
+	auto currentTime = std::chrono::system_clock::now();     //獲取當前時間
 	auto elapsedSeconds = std::chrono::duration<double>();
 	if (m_previousTime.time_since_epoch().count())
 	{
-		elapsedSeconds = currentTime - m_previousTime; //計算當前時間與上次時間的差值
+		elapsedSeconds = currentTime - m_previousTime;       //計算當前時間與上次時間的差值
 	}
-	m_previousTime = currentTime; //更新上次時間為當前時間
+	m_previousTime = currentTime;                            //更新上次時間為當前時間
 
 
-	auto deltaTime = (f32)elapsedSeconds.count(); //將時間差轉換為浮點數類型的秒數
+	auto deltaTime = (f32)elapsedSeconds.count();            //將時間差轉換為浮點數類型的秒數
+
+
+
+
+
+	onUpdate(deltaTime);                               //調用OGame類的onUpdate函數，傳入時間差作為參數, 這樣可以實現每幀更新遊戲狀態的功能
+	m_entitySystem->update(deltaTime);                 //調用OEntitySystem類的update函數，更新實體系統的狀態，傳入時間差作為參數
+
+
 
 
 
@@ -262,4 +274,9 @@ void OGame::onQuit()
 void OGame::quit()
 {
 	m_isRunning = false;
+}
+
+OEntitySystem* OGame::getEntitySystem()
+{
+	return m_entitySystem.get();
 }

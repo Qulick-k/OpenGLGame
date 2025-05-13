@@ -1,11 +1,11 @@
-#include <OGL3D/Game/OGame.h>
+#include "MyGame.h"
 #include <iostream> //引入C++標準的輸入輸出流庫
 
 int main()
 {
 	try
 	{
-		OGame game;
+		MyGame game;
 		game.run();
 	}
 	catch (const std::exception& e)

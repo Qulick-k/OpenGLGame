@@ -1,27 +1,34 @@
 #pragma once
+#include <OGL3D/OPrerequisites.h>
 #include <memory>
-#include <OGL3D/Graphics/OGraphicsEngine.h>
 #include <chrono>
 
 //class OGraphicsEngine;
+class OGraphicsEngine;
+class OEntitySystem;
 class OWindow;
 class OGame
 {
 public:
 	OGame();
-	~OGame();
-
-	virtual void onCreate();
-	virtual void onUpdate();
-	virtual void onQuit();
+	virtual ~OGame();
 
 	void run();
 	void quit();
+
+	OEntitySystem* getEntitySystem();
+
+protected	:
+	virtual void onCreate();
+	virtual void onUpdate(f32 deltaTime) {}
+	virtual void onQuit();
+private:
+	void onUpdateInternal();
 protected:
 	bool m_isRunning = true;
 	std::unique_ptr<OGraphicsEngine> m_graphicsEngine; //定義名為 m_graphicsEngine 指向 OGraphicsEngine 類型的智慧指針
 	std::unique_ptr<OWindow> m_display;                //定義名為 m_display 指向 OWindow 類型的智慧指針, 來取代OWindow* m_display = nullptr
-
+	std::unique_ptr<OEntitySystem> m_entitySystem;     //定義名為 m_entitySystem 指向 OEntitySystem 類型的智慧指針
 
 
 	OVertexArrayObjectPtr m_polygonVAO;                 //定義名為 m_polygonVAO 指向 OVertexArrayObject 類型的智慧指針

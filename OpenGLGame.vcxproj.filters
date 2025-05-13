@@ -48,6 +48,18 @@
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\OUniformBuffer.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="OGL3D\source\OGL3D\Entity\OEntitySystem.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="OGL3D\source\OGL3D\Entity\OEntity.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\MyGame.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\MyPlayer.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGL3D\include\OGL3D\Window\OWindow.h">
@@ -84,6 +96,21 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="OGL3D\include\OGL3D\Math\OVec2.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\Entity\OEntitySystem.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\Entity\OEntity.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\MyGame.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\All.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\MyPlayer.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

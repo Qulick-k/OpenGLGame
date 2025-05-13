@@ -35,7 +35,7 @@ void OGame::run()
 			}
 		}
 
-		onUpdate();            //onUpdate取代Sleep(1);                       //讓CPU休息一下
+		onUpdateInternal();            //onUpdateInternal取代Sleep(1);                       //讓CPU休息一下
 	}
 
 	onQuit();                  //執行onQuit()函數

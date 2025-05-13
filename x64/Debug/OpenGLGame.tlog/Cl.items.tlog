@@ -1,4 +1,8 @@
 G:\OpenGL_SideProject\OpenGLGame\Game\main.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\main.obj
+G:\OpenGL_SideProject\OpenGLGame\Game\MyGame.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\MyGame.obj
+G:\OpenGL_SideProject\OpenGLGame\Game\MyPlayer.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\MyPlayer.obj
+G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Entity\OEntity.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OEntity.obj
+G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Entity\OEntitySystem.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OEntitySystem.obj
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Game\Win32\CWin32Game.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\CWin32Game.obj
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Game\OGame.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OGame.obj
 G:\OpenGL_SideProject\OpenGLGame\OGL3D\source\OGL3D\Graphics\Win32\CWin32GraphicsEngine.cpp;G:\OpenGL_SideProject\OpenGLGame\x64\Debug\CWin32GraphicsEngine.obj
