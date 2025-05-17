@@ -43,9 +43,9 @@ OWindow::OWindow()
 	AdjustWindowRect(&rc, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, false);         //調整視窗大小，視窗樣式包含標題欄和邊框(WS_OVERLAPPED) | 視窗有標題欄(WS_CAPTION) | 視窗包含最大化、最小化、關閉按鈕(WS_SYSMENU)
 
 	//(dwExStyle)不使用任何擴展樣式, MAKEINTATOM(classid)取代(lpClassName)使用 Unicode 字符串標示視窗類別的名稱, (lpWindowName)使用 Unicode 字符串標示視窗標題, 
-	//(dwStyle)視窗的樣式包刮邊框和標題欄|視窗標題欄|視窗包含最大化、最小化、關閉按鈕、視窗的位置和大小
+	//(dwStyle)視窗的樣式包刮邊框和標題欄|視窗標題欄|視窗包含最大化、最小化、關閉按鈕、視窗的位置和大小 "PardCode | OpenGL 3D Game"
 	//(x,y)讓系統自動選擇視窗初始位置,(nWidth,nHeight)設定視窗的寬和高, (hParent)沒有父層視窗, (hMenu)沒有菜單, (hInstance)沒有實例, (lpParam)沒有特別的數據要傳遞
-	m_handle = CreateWindowEx(NULL, MAKEINTATOM(classid), L"PardCode | OpenGL 3D Gmae", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+	m_handle = CreateWindowEx(NULL, MAKEINTATOM(classid), L"Test Graphics API", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
 		CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, NULL, NULL);
 
 

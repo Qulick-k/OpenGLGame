@@ -1,8 +1,2 @@
-﻿  MyGame.cpp
-  MyPlayer.cpp
-  main.cpp
-  OEntity.cpp
-  OEntitySystem.cpp
-  OGame.cpp
-  Generating Code...
+﻿  CWin32Window.cpp
   OpenGLGame.vcxproj -> G:\OpenGL_SideProject\OpenGLGame\x64\Debug\OpenGLGame.exe
